@@ -1,7 +1,9 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import Preloader from "./Preloader";
+import SceneBoundary from "./SceneBoundary";
 import Icon from "./Icon";
 import { useInView } from "./useInView";
 import { useScrollProgress } from "./useScrollProgress";
@@ -20,6 +22,8 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 }
 
 export default function ScrollStory() {
+  const [ready, setReady] = useState(false);
+  const onReady = useCallback(() => setReady(true), []);
   const overlay = useRef<HTMLDivElement>(null);
   const rail = useRef<HTMLDivElement>(null);
   const [viewRef, inView] = useInView<HTMLDivElement>("0px");
@@ -38,6 +42,12 @@ export default function ScrollStory() {
       d.style.transform = `scaleY(${Math.abs(s - i) < 0.5 ? 1 : 0.35})`;
     });
   });
+
+  // Never trap the visitor behind the loader (slow GPU, WebGL disabled, etc.).
+  useEffect(() => {
+    const t = window.setTimeout(onReady, 9000);
+    return () => window.clearTimeout(t);
+  }, [onReady]);
 
   useEffect(() => {
     const onMove = (e: PointerEvent) => {
@@ -59,12 +69,15 @@ export default function ScrollStory() {
 
   return (
     <section ref={sectionRef} id="top" className="relative h-[400vh]">
+      <Preloader ready={ready} />
       <div ref={viewRef} className="sticky top-0 h-dvh overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_70%_45%,rgba(126,211,33,0.16),transparent_70%),radial-gradient(ellipse_50%_40%_at_15%_85%,rgba(43,133,12,0.08),transparent_70%)]" />
         <div className="dots-bg absolute inset-0" />
 
         <div className="absolute inset-0">
-          <StoryScene active={inView} />
+          <SceneBoundary onError={onReady}>
+            <StoryScene active={inView} onReady={onReady} />
+          </SceneBoundary>
         </div>
 
         <div ref={overlay} className="pointer-events-none absolute inset-0 mx-auto max-w-7xl">

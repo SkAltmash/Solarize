@@ -61,18 +61,27 @@ export function ProjectCard({ p, priority = false }: { p: Project; priority?: bo
 }
 
 export function PartnersStrip() {
-  const row = [...partners, ...partners];
+  const row = [...partners, ...partners, ...partners];
   return (
     <section className="py-16" aria-label="Brands we install">
       <p className="mb-8 text-center text-sm font-semibold text-muted">Tier-1 brands we install and service</p>
-      <div className="relative overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_12%,black_88%,transparent)]">
-        <div className="marquee flex w-max items-center gap-16" style={{ "--marquee-duration": "35s" } as React.CSSProperties}>
+      <div className="marquee-pause relative overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]">
+        <ul className="marquee flex w-max items-center gap-4 sm:gap-5" style={{ "--marquee-duration": "45s" } as React.CSSProperties}>
           {row.map((p, i) => (
-            <span key={i} className="whitespace-nowrap font-display text-2xl font-extrabold tracking-tight text-text/25 transition hover:text-brand sm:text-3xl">
-              {p}
-            </span>
+            <li
+              key={i}
+              aria-hidden={i >= partners.length}
+              className="group grid h-20 w-40 shrink-0 place-items-center rounded-2xl border border-line bg-white px-5 transition duration-300 hover:-translate-y-0.5 hover:border-brand/30 hover:shadow-lg sm:h-24 sm:w-48"
+            >
+              <Image
+                src={p.logo}
+                alt={p.name}
+                className="max-h-12 w-auto object-contain transition duration-300 group-hover:scale-105 sm:max-h-14"
+                sizes="192px"
+              />
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );
@@ -89,15 +98,6 @@ function Stars({ className = "h-4 w-4" }: { className?: string }) {
     </span>
   );
 }
-
-const initials = (name: string) =>
-  name
-    .replace(/^Dr\.\s*/, "")
-    .split(/\s|&/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join("");
 
 export function Testimonials() {
   const rows = [testimonials.slice(0, 3), testimonials.slice(3)];
@@ -131,7 +131,7 @@ export function Testimonials() {
                   <Stars />
                   <blockquote className="mt-4 flex-1 text-[15px] leading-relaxed text-text/85">&ldquo;{t.quote}&rdquo;</blockquote>
                   <figcaption className="mt-6 flex items-center gap-3 border-t border-line pt-5">
-                    <span className="grid h-11 w-11 place-items-center rounded-full bg-brand-soft font-display text-sm font-bold text-brand-deep">{initials(t.name)}</span>
+                    <Image src={t.photo} alt={t.name} width={48} height={48} sizes="48px" className="h-12 w-12 rounded-full object-cover ring-2 ring-white" />
                     <span>
                       <span className="block font-semibold">{t.name}</span>
                       <span className="block text-sm text-muted">
@@ -381,8 +381,13 @@ export function Footer() {
           Solarize
         </p>
         <div className="mt-6 flex flex-col justify-between gap-3 border-t border-white/10 pt-8 text-xs text-white/50 sm:flex-row">
-          <p>© Solarize Energy. All rights reserved.</p>
-          <p>{site.city}</p>
+          <p>© Solarize Energy. All rights reserved. · {site.city}</p>
+          <p>
+            Architected by{" "}
+            <a href="https://zaref.in" target="_blank" rel="noopener" className="font-semibold text-white/80 underline-offset-4 transition hover:text-brand-bright hover:underline">
+              Zaref Technology
+            </a>
+          </p>
         </div>
       </div>
     </footer>

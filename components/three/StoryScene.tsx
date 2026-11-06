@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { ContactShadows, Edges, Environment, Lightformer } from "@react-three/drei";
@@ -210,7 +210,7 @@ const SLOTS: [number, number][] = [
   [1, 0.5],
 ];
 
-function Story({ labels }: { labels: React.RefObject<HTMLDivElement | null> }) {
+function Story({ labels, onReady }: { labels: React.RefObject<HTMLDivElement | null>; onReady?: () => void }) {
   const mats = useMaterials();
   const root = useRef<THREE.Group>(null);
   const hero = useRef<THREE.Group>(null);
@@ -218,7 +218,16 @@ function Story({ labels }: { labels: React.RefObject<HTMLDivElement | null> }) {
   const rails = useRef<THREE.Group>(null);
   const explode = useRef(0);
   const smoothP = useRef(0);
-  const { size } = useThree();
+  const { size, gl, scene, camera } = useThree();
+
+  // Signal readiness once textures are built and shaders compiled, so the page can drop its loader.
+  useEffect(() => {
+    gl.compile(scene, camera);
+    let raf = requestAnimationFrame(() => {
+      raf = requestAnimationFrame(() => onReady?.());
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [gl, scene, camera, onReady]);
 
   useFrame(({ clock }, dt) => {
     smoothP.current = THREE.MathUtils.damp(smoothP.current, story.p, 5, dt);
@@ -275,7 +284,7 @@ function Story({ labels }: { labels: React.RefObject<HTMLDivElement | null> }) {
   );
 }
 
-export default function StoryScene({ active = true }: { active?: boolean }) {
+export default function StoryScene({ active = true, onReady }: { active?: boolean; onReady?: () => void }) {
   const labels = useRef<HTMLDivElement>(null);
   return (
     <div className="relative h-full w-full">
@@ -296,7 +305,7 @@ export default function StoryScene({ active = true }: { active?: boolean }) {
           <Lightformer intensity={2} color="#cfeeb4" position={[7, -1, 2]} rotation-y={-Math.PI / 2} scale={[10, 4, 1]} />
           <Lightformer intensity={1.5} position={[0, -4, 4]} rotation-x={Math.PI / 2} scale={[12, 2, 1]} />
         </Environment>
-        <Story labels={labels} />
+        <Story labels={labels} onReady={onReady} />
         <ContactShadows position={[0, -2.3, 0]} scale={14} blur={3} far={5} opacity={0.28} color="#0f2e0a" />
       </Canvas>
       <div ref={labels} className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>

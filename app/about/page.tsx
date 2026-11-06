@@ -12,12 +12,6 @@ export const metadata: Metadata = {
   description: `Solarize Energy has been installing rooftop solar across Nagpur and Vidarbha since ${company.founded}.`,
 };
 
-const initials = (name: string) =>
-  name
-    .split(" ")
-    .map((w) => w[0])
-    .join("");
-
 export default function AboutPage() {
   return (
     <>
@@ -130,8 +124,14 @@ export default function AboutPage() {
               {team.map((m, i) => (
                 <Reveal key={m.name} delay={i * 90}>
                   <div className="group rounded-4xl border border-line bg-bg p-6 transition duration-500 hover:-translate-y-1 hover:border-brand/30">
-                    <div className="grid aspect-square place-items-center rounded-3xl bg-gradient-to-br from-brand-soft to-surface-2">
-                      <span className="font-display text-6xl font-extrabold text-brand transition duration-500 group-hover:scale-110">{initials(m.name)}</span>
+                    <div className="overflow-hidden rounded-3xl bg-gradient-to-br from-brand-soft to-surface-2">
+                      <Image
+                        src={m.photo}
+                        alt={m.name}
+                        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                        placeholder="blur"
+                        className="aspect-square w-full object-cover transition duration-500 group-hover:scale-105"
+                      />
                     </div>
                     <h3 className="mt-6 font-display text-lg font-bold">{m.name}</h3>
                     <p className="text-sm font-semibold text-brand">{m.role}</p>

@@ -17,6 +17,23 @@ import dairyFarm from "@/public/images/dairy-farm.jpg";
 import panelCloseup from "@/public/images/panel-closeup.jpg";
 import installerHands from "@/public/images/installer-hands.jpg";
 import fieldPanels from "@/public/images/field-panels.jpg";
+import adani from "@/public/partners/adani.png";
+import polycab from "@/public/partners/polycab.png";
+import tata from "@/public/partners/tata.png";
+import utl from "@/public/partners/utl.png";
+import vguard from "@/public/partners/vguard.png";
+import waaree from "@/public/partners/waaree.png";
+// Stock portraits (Unsplash licence) — models, not real customers or staff.
+import rajeshPhoto from "@/public/people/rajesh.jpg";
+import anjaliPhoto from "@/public/people/anjali.jpg";
+import sunilPhoto from "@/public/people/sunil.jpg";
+import priyaPhoto from "@/public/people/priya.jpg";
+import vikasPhoto from "@/public/people/vikas.jpg";
+import meenaPhoto from "@/public/people/meena.jpg";
+import adityaPhoto from "@/public/people/aditya.jpg";
+import snehaPhoto from "@/public/people/sneha.jpg";
+import rohitPhoto from "@/public/people/rohit.jpg";
+import kavitaPhoto from "@/public/people/kavita.jpg";
 
 export const images = { panelCloseup, installerHands, fieldPanels, installerRoof, campusPlant };
 
@@ -168,6 +185,7 @@ export const projects: Project[] = [
 export const testimonials = [
   {
     name: "Rajesh Deshmukh",
+    photo: rajeshPhoto,
     place: "Dharampeth",
     system: "5 kW home",
     quote:
@@ -175,6 +193,7 @@ export const testimonials = [
   },
   {
     name: "Dr. Anjali Khare",
+    photo: anjaliPhoto,
     place: "Sitabuldi",
     system: "80 kW hospital",
     quote:
@@ -182,31 +201,42 @@ export const testimonials = [
   },
   {
     name: "Sunil Bawankule",
+    photo: sunilPhoto,
     place: "Katol",
     system: "7.5 HP solar pump",
     quote: "No more diesel bills or waiting for power at night. The pump runs all day on sunlight and my orchard has never looked better.",
   },
   {
     name: "Priya & Amit Joshi",
+    photo: priyaPhoto,
     place: "Manish Nagar",
     system: "3 kW home",
     quote: "Very transparent pricing. They showed us exactly how much we would save and the numbers have matched month after month.",
   },
   {
     name: "Vikas Agrawal",
+    photo: vikasPhoto,
     place: "MIDC Butibori",
     system: "250 kW plant",
     quote: "Professional engineering and clean execution. Payback is tracking ahead of what they promised in the proposal.",
   },
   {
     name: "Meena Thakre",
+    photo: meenaPhoto,
     place: "Wardha Road",
     system: "40 kW society",
     quote: "Our society maintenance charges dropped noticeably. The committee loved the clear monthly generation reports.",
   },
 ];
 
-export const partners = ["Waaree", "Adani Solar", "Tata Power Solar", "Vikram Solar", "Luminous", "Havells", "Growatt", "Sungrow"];
+export const partners = [
+  { name: "Waaree", logo: waaree },
+  { name: "Adani Solar", logo: adani },
+  { name: "Tata Power Solar", logo: tata },
+  { name: "Polycab Solar", logo: polycab },
+  { name: "V-Guard", logo: vguard },
+  { name: "UTL Solar", logo: utl },
+];
 
 export const certifications = [
   { title: "PM Surya Ghar registered vendor", text: "Authorised to install subsidy-eligible residential systems." },
@@ -223,7 +253,18 @@ export const guarantees = [
 ];
 
 export const serviceAreas = {
-  city: ["Dharampeth", "Civil Lines", "Manish Nagar", "Pratap Nagar", "Wardha Road", "Hingna", "Koradi Road", "Besa", "Trimurti Nagar", "Sadar"],
+  city: [
+    "Dharampeth",
+    "Civil Lines",
+    "Manish Nagar",
+    "Pratap Nagar",
+    "Wardha Road",
+    "Hingna",
+    "Koradi Road",
+    "Besa",
+    "Trimurti Nagar",
+    "Sadar",
+  ],
   districts: ["Nagpur", "Wardha", "Chandrapur", "Bhandara", "Gondia", "Amravati", "Yavatmal"],
 };
 
@@ -237,10 +278,10 @@ export const timeline = [
 ];
 
 export const team = [
-  { name: "Aditya Wankhede", role: "Founder & CEO", bio: "Electrical engineer, 12 years in renewable energy." },
-  { name: "Sneha Patil", role: "Head of Design", bio: "Designs every system for maximum yield and safety." },
-  { name: "Rohit Meshram", role: "Projects Lead", bio: "Has led over 600 installations across Vidarbha." },
-  { name: "Kavita Ingle", role: "Customer Success", bio: "Makes sure subsidy and net metering go smoothly." },
+  { name: "Aditya Wankhede", photo: adityaPhoto, role: "Founder & CEO", bio: "Electrical engineer, 12 years in renewable energy." },
+  { name: "Sneha Patil", photo: snehaPhoto, role: "Head of Design", bio: "Designs every system for maximum yield and safety." },
+  { name: "Rohit Meshram", photo: rohitPhoto, role: "Projects Lead", bio: "Has led over 600 installations across Vidarbha." },
+  { name: "Kavita Ingle", photo: kavitaPhoto, role: "Customer Success", bio: "Makes sure subsidy and net metering go smoothly." },
 ];
 
 export const values = [

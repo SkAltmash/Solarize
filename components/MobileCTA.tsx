@@ -15,7 +15,9 @@ export default function MobileCTA() {
       const el = bar.current;
       const contact = document.getElementById("contact");
       if (!el) return;
-      const past = window.scrollY > window.innerHeight * 1.2;
+      // On the home page wait until the 3D scroll story is finished; elsewhere, after the header.
+      const story = document.getElementById("top");
+      const past = story ? story.getBoundingClientRect().bottom < window.innerHeight * 0.15 : window.scrollY > window.innerHeight * 0.6;
       const r = contact?.getBoundingClientRect();
       const atContact = !!r && r.top < window.innerHeight && r.bottom > 0;
       const show = past && !atContact;
